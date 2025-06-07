@@ -1,0 +1,30 @@
+# Node modules
+node_modules
+
+# Build output
+.next
+out
+
+# Configuration / outils
+*.log
+package-lock.json
+yarn.lock
+
+# Environnements
+.env
+.env.* 
+
+# Public/static assets
+public
+static
+
+# Git
+.git
+.gitignore
+
+# VS Code
+.vscode
+
+# Système
+.DS_Store
+Thumbs.db
