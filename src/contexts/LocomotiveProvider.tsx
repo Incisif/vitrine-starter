@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react'
 import { createLocomotiveScroll } from '@/lib/locomotive-scroll'
 
+import LocomotiveScroll from 'locomotive-scroll'
+
 type LocomotiveContextType = {
   scroll: LocomotiveScroll | null
 }
