@@ -6,7 +6,7 @@ export { LocomotiveScroll }
 export function createLocomotiveScroll(options = {}) {
   return new LocomotiveScroll({
     smooth: true,
-    lerp: 0.075,
+    lerp: 0.4,
     ...options,
   })
 }
