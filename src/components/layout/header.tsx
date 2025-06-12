@@ -5,34 +5,41 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import { SiFacebook, SiInstagram } from 'react-icons/si'
+import { useLocomotiveContext } from '@/contexts/LocomotiveProvider' // adapte le chemin si besoin
 
 const HEADER_HEIGHT = 70
 
 export default function Header() {
   const [hidden, setHidden] = useState(false)
-  const [lastScrollY, setLastScrollY] = useState(0)
+  const [lastY, setLastY] = useState(0)
+  const { scroll } = useLocomotiveContext()
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY
+    if (!scroll) return
 
-      if (currentY > lastScrollY && currentY > HEADER_HEIGHT) {
+    const onScroll = (args: unknown) => {
+      const obj = args as { scroll: { y: number } } // ✅ cast sûr ici
+      const currentY = obj.scroll.y
+
+      if (currentY > lastY && currentY > HEADER_HEIGHT) {
         setHidden(true)
-      } else if (currentY < lastScrollY) {
+      } else if (currentY < lastY) {
         setHidden(false)
       }
 
-      setLastScrollY(currentY)
+      setLastY(currentY)
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [lastScrollY])
+    scroll.on('scroll', onScroll)
+    return () => {
+      scroll.off?.('scroll', onScroll)
+    }
+  }, [scroll, lastY])
 
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gray-600 ',
+        'fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gray-600',
         hidden ? '-translate-y-full' : 'translate-y-0'
       )}
       style={{ height: HEADER_HEIGHT }}

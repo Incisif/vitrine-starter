@@ -1,9 +1,12 @@
-import LocomotiveScroll from 'locomotive-scroll'
 import 'locomotive-scroll/dist/locomotive-scroll.css'
 
-export { LocomotiveScroll }
+import type { LocomotiveScrollOptions } from 'locomotive-scroll'
 
-export function createLocomotiveScroll(options = {}) {
+export async function createLocomotiveScroll(
+  options: LocomotiveScrollOptions
+): Promise<import('locomotive-scroll').default> {
+  const LocomotiveScroll = (await import('locomotive-scroll')).default
+
   return new LocomotiveScroll({
     smooth: true,
     lerp: 0.4,

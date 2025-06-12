@@ -1,9 +1,9 @@
 'use client'
 
 import { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react'
-import { createLocomotiveScroll } from '@/lib/locomotive-scroll'
 
-import LocomotiveScroll from 'locomotive-scroll'
+import { createLocomotiveScroll } from '@/lib/locomotive-scroll'
+import type LocomotiveScroll from 'locomotive-scroll' // 👈 pas d'import "réel", juste le type
 
 type LocomotiveContextType = {
   scroll: LocomotiveScroll | null
@@ -14,18 +14,31 @@ const LocomotiveContext = createContext<LocomotiveContextType>({ scroll: null })
 export function LocomotiveProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [scroll, setScroll] = useState<LocomotiveScroll | null>(null)
-
   useEffect(() => {
-    if (!containerRef.current) return
+    let isMounted = true
+    let scrollInstance: LocomotiveScroll | null = null
 
-    const scrollInstance = createLocomotiveScroll({
-      el: containerRef.current,
-    })
+    const init = async () => {
+      await new Promise((resolve) => requestAnimationFrame(resolve)) // 👈 attends que le DOM soit prêt
 
-    setScroll(scrollInstance)
+      if (!containerRef.current) return
+
+      const instance = await createLocomotiveScroll({
+        el: containerRef.current,
+      })
+
+      if (!isMounted) return
+      scrollInstance = instance
+      setScroll(instance)
+
+      new ResizeObserver(() => scrollInstance?.update()).observe(containerRef.current)
+    }
+
+    init()
 
     return () => {
-      scrollInstance.destroy()
+      isMounted = false
+      scrollInstance?.destroy()
     }
   }, [])
 

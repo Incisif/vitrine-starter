@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import '../styles/globals.css'
-import SmoothScrollContainer from '@/components/common/SmoothScrollContainer'
+
+import { LocomotiveProvider } from '@/contexts/LocomotiveProvider'
 import LayoutContainer from '@/components/common/LayoutContainer'
 import Header from '@/components/layout/header'
 
@@ -28,10 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SmoothScrollContainer>
+        <LocomotiveProvider>
           <Header />
           <LayoutContainer>{children}</LayoutContainer>
-        </SmoothScrollContainer>
+        </LocomotiveProvider>
       </body>
     </html>
   )
