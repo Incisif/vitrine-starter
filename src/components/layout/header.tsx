@@ -1,40 +1,51 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { cn } from '@/lib/utils'
 import { SiFacebook, SiInstagram } from 'react-icons/si'
-import { useLocomotiveContext } from '@/contexts/LocomotiveProvider' // adapte le chemin si besoin
+import { cn } from '@/lib/utils'
+import { useLocomotiveContext } from '@/contexts/LocomotiveProvider'
 
 const HEADER_HEIGHT = 70
+const SCROLL_THRESHOLD = 10
 
 export default function Header() {
-  const [hidden, setHidden] = useState(false)
-  const [lastY, setLastY] = useState(0)
   const { scroll } = useLocomotiveContext()
+  const [hidden, setHidden] = useState(false)
+  const lastYRef = useRef(0)
 
   useEffect(() => {
     if (!scroll) return
 
+    type ScrollEvent = { scroll: { y: number } }
+
     const onScroll = (args: unknown) => {
-      const obj = args as { scroll: { y: number } } // ✅ cast sûr ici
-      const currentY = obj.scroll.y
+      if (
+        typeof args === 'object' &&
+        args !== null &&
+        'scroll' in args &&
+        typeof (args as ScrollEvent).scroll?.y === 'number'
+      ) {
+        const currentY = (args as ScrollEvent).scroll.y
+        const lastY = lastYRef.current
+        const delta = currentY - lastY
 
-      if (currentY > lastY && currentY > HEADER_HEIGHT) {
-        setHidden(true)
-      } else if (currentY < lastY) {
-        setHidden(false)
+        if (Math.abs(delta) < SCROLL_THRESHOLD) return
+
+        if (delta > 0 && currentY > HEADER_HEIGHT) {
+          setHidden(true)
+        } else if (delta < 0) {
+          setHidden(false)
+        }
+
+        lastYRef.current = currentY
       }
-
-      setLastY(currentY)
     }
 
     scroll.on('scroll', onScroll)
-    return () => {
-      scroll.off?.('scroll', onScroll)
-    }
-  }, [scroll, lastY])
+    return () => scroll.off?.('scroll', onScroll)
+  }, [scroll])
 
   return (
     <header
@@ -53,24 +64,9 @@ export default function Header() {
 
         {/* Navigation centrée */}
         <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex gap-6 text-sm">
-          <Link
-            href="#accueil"
-            className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Accueil
-          </Link>
-          <Link
-            href="#histoire"
-            className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Notre histoire
-          </Link>
-          <Link
-            href="#contact"
-            className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
-          >
-            Contact
-          </Link>
+          <Link href="#accueil" className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full">Accueil</Link>
+          <Link href="#histoire" className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full">Notre histoire</Link>
+          <Link href="#contact" className="relative after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full">Contact</Link>
         </nav>
 
         {/* Réseaux sociaux à droite */}

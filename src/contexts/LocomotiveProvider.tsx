@@ -19,12 +19,12 @@ export function LocomotiveProvider({ children }: Readonly<{ children: React.Reac
     let scrollInstance: LocomotiveScroll | null = null
 
     const init = async () => {
-      await new Promise((resolve) => requestAnimationFrame(resolve)) // 👈 attends que le DOM soit prêt
+      await new Promise((resolve) => requestAnimationFrame(resolve)) 
 
       if (!containerRef.current) return
 
       const instance = await createLocomotiveScroll({
-        el: containerRef.current,
+        el: containerRef.current
       })
 
       if (!isMounted) return
