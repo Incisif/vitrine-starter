@@ -4,7 +4,7 @@ import '../styles/globals.css'
 
 import { LocomotiveProvider } from '@/contexts/LocomotiveProvider'
 import LayoutContainer from '@/components/common/LayoutContainer'
-import Header from '@/components/layout/header'
+import Header from '@/components/layout/Header'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

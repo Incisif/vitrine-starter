@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useRef, useState, useMemo } from 'react'
 
 import { createLocomotiveScroll } from '@/lib/locomotive-scroll'
-import type LocomotiveScroll from 'locomotive-scroll' // 👈 pas d'import "réel", juste le type
+import type LocomotiveScroll from 'locomotive-scroll' 
 
 type LocomotiveContextType = {
   scroll: LocomotiveScroll | null
