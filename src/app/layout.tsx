@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 import '../styles/globals.css'
 
 import { LocomotiveProvider } from '@/contexts/LocomotiveProvider'
-import LayoutContainer from '@/components/common/LayoutContainer'
+
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import ScrollToTopButton from '@/components/common/ScrollToTopButton'
@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LocomotiveProvider>
           <Header />
-          <LayoutContainer>{children}<ScrollToTopButton /></LayoutContainer>
+          {children}<ScrollToTopButton />
           <Footer />
         </LocomotiveProvider>
       </body>
