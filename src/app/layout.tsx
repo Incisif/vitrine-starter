@@ -5,6 +5,7 @@ import '../styles/globals.css'
 import { LocomotiveProvider } from '@/contexts/LocomotiveProvider'
 import LayoutContainer from '@/components/common/LayoutContainer'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,6 +33,7 @@ export default function RootLayout({
         <LocomotiveProvider>
           <Header />
           <LayoutContainer>{children}</LayoutContainer>
+          <Footer />
         </LocomotiveProvider>
       </body>
     </html>

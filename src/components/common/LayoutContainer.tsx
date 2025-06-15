@@ -10,7 +10,7 @@ export default function LayoutContainer({
   className,
 }: LayoutContainerProps) {
   return (
-    <div className={cn('w-full max-w-screen-xl mx-auto px-4', className)}>
+    <div className={cn('w-full max-w-screen-xl mx-auto px-4 min-h-screen', className)}>
       {children}
     </div>
   );
