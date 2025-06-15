@@ -6,6 +6,7 @@ import { LocomotiveProvider } from '@/contexts/LocomotiveProvider'
 import LayoutContainer from '@/components/common/LayoutContainer'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import ScrollToTopButton from '@/components/common/ScrollToTopButton'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -32,7 +33,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LocomotiveProvider>
           <Header />
-          <LayoutContainer>{children}</LayoutContainer>
+          <LayoutContainer>{children}<ScrollToTopButton /></LayoutContainer>
           <Footer />
         </LocomotiveProvider>
       </body>

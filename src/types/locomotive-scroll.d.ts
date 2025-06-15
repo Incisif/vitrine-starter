@@ -21,6 +21,15 @@ declare module 'locomotive-scroll' {
     }
   }
 
+  export interface ScrollEvent {
+    scroll: {
+      x: number
+      y: number
+      direction: string
+      speed: number
+    }
+  }
+
   export default class LocomotiveScroll {
     constructor(options: LocomotiveScrollOptions)
 
@@ -37,8 +46,8 @@ declare module 'locomotive-scroll' {
       }
     ): void
 
-    on(event: 'scroll' | string, callback: (args: unknown) => void): void
-    off?(event: 'scroll' | string, callback: (args: unknown) => void): void
+    on(event: 'scroll' | string, callback: (args: ScrollEvent) => void): void
+    off?(event: 'scroll' | string, callback: (args: ScrollEvent) => void): void
     stop(): void
     start(): void
   }
