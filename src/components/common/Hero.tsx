@@ -16,15 +16,15 @@ export default function Hero({
   alt = 'Image de vitrine',
 }: Readonly<HeroProps>) {
   return (
-    <section className="relative w-full h-[400px] lg:h-[700px]">
+    <section className="relative w-full h-[var(--hero-height)]">
       <Image
         src={imageSrc}
         alt={alt}
         fill
         className="object-cover"
         priority
-        quality={75} // réduit le poids sans perte visible
-        sizes="(max-width: 1024px) 100vw, 1920px" // responsive
+        quality={75} 
+        sizes="(max-width: 1024px) 100vw, 1920px" 
       />
 
       {(title || subtitle) && (
@@ -33,6 +33,6 @@ export default function Hero({
           {subtitle && <p className="mt-4 text-lg md:text-xl">{subtitle}</p>}
         </div>
       )}
-    </section>
+    </section> 
   )
 }

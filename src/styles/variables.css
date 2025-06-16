@@ -1,0 +1,15 @@
+:root {
+  --header-height: 45px;
+  --footer-height: 100px;
+  --hero-height: 400px;
+}
+
+
+  @media (min-width: 768px) {
+    :root {
+      --header-height: 70px;
+      --footer-height: 150px;
+      --hero-height: 700px;
+    }
+  }
+

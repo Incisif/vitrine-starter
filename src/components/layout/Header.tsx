@@ -51,7 +51,6 @@ export default function Header() {
     }
   }, [scroll])
 
-  // Fermer le menu si on scroll et qu'il est ouvert
   useEffect(() => {
     if (hidden && open) setOpen(false)
   }, [hidden, open])
@@ -62,7 +61,7 @@ export default function Header() {
         ref={headerRef}
         className={cn(
           'fixed top-0 left-0 w-full z-[1000] transition-transform duration-300 bg-gray-600',
-          'h-[45px] md:h-[70px]',
+          'h-[var(--header-height)] ',
           hidden ? '-translate-y-full' : 'translate-y-0'
         )}
       >
@@ -75,24 +74,43 @@ export default function Header() {
 
           {/* Navigation desktop */}
           <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex gap-6 text-sm">
-            <Link href="#accueil" className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full">
+            <Link
+              href="/"
+              className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full"
+            >
               <FiHome className="absolute left-[-20px] top-1/2 -translate-y-1/2 text-white" />
               Accueil
             </Link>
-            <Link href="#histoire" className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full">
+            <Link
+              href="/histoire"
+              className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full"
+            >
               Notre histoire
             </Link>
-            <Link href="#contact" className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full">
+            <Link
+              href="/contact"
+              className="text-white relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-white after:transition-all hover:after:w-full"
+            >
               Contact
             </Link>
           </nav>
 
           {/* Réseaux sociaux */}
           <div className="hidden md:flex items-center gap-4">
-            <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <Link
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
               <SiFacebook className="w-5 h-5 text-white hover:text-blue-600" />
             </Link>
-            <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <Link
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
               <SiInstagram className="w-5 h-5 text-white hover:text-pink-500" />
             </Link>
           </div>
@@ -104,11 +122,17 @@ export default function Header() {
 
       {/* Menu mobile */}
       {open && (
-        <div className="fixed left-0 w-full bg-gray-900 text-white z-[999] top-[45px] md:top-[70px]">
+        <div className="fixed left-0 w-full bg-gray-900 text-white z-[999] top-[var(--header-height)] ">
           <nav className="flex flex-col items-center gap-6 py-6">
-            <Link href="#accueil" onClick={() => setOpen(false)}>Accueil</Link>
-            <Link href="#histoire" onClick={() => setOpen(false)}>Notre histoire</Link>
-            <Link href="#contact" onClick={() => setOpen(false)}>Contact</Link>
+            <Link href="/" onClick={() => setOpen(false)}>
+              Accueil
+            </Link>
+            <Link href="/histoire" onClick={() => setOpen(false)}>
+              Notre histoire
+            </Link>
+            <Link href="/contact" onClick={() => setOpen(false)}>
+              Contact
+            </Link>
           </nav>
         </div>
       )}
