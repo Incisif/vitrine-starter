@@ -6,12 +6,13 @@ type LayoutContainerProps = Readonly<{
   marginTop?: string
 }>
 
-export default function LayoutContainer({ children, className,marginTop }: LayoutContainerProps) {
+export default function LayoutContainer({ children, className, marginTop }: LayoutContainerProps) {
   return (
     <div
       className={cn(
-        'w-full max-w-screen-xl mx-auto px-4 min-h-screen',
-        marginTop ? `${marginTop}` : 'mt-0',
+        'w-full max-w-screen-xl mx-auto px-4',
+        'min-h-[calc(100vh-var(--header-height))]',
+        marginTop ?? 'mt-0',
         className
       )}
     >
